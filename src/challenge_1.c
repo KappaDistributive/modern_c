@@ -1,9 +1,11 @@
+#include<assert.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include <stdbool.h>
 
-bool is_sorted(double* array, int size) {
-  for (int i = 1; i < size; ++i) {
+
+bool is_sorted(size_t size, double array[size]) {
+  for (size_t i = 1; i < size; ++i) {
     if (array[i] < array[i-1]) {
       return false;
     }
@@ -11,16 +13,17 @@ bool is_sorted(double* array, int size) {
   return true;
 }
 
-void merge_sort_step(int lower, int upper, double a[], double aux[]) {
+
+void merge_sort_step(size_t lower, size_t upper, double a[], double aux[]) {
   if (upper <= lower) return;
 
-  int mid = (upper + lower) / 2;
+  size_t mid = (upper + lower) / 2;
 
   merge_sort_step(lower, mid, a, aux);
   merge_sort_step(mid + 1, upper, a, aux);
   
-  int index_lhs = lower;
-  int index_rhs = mid + 1;
+  size_t index_lhs = lower;
+  size_t index_rhs = mid + 1;
   for (int index = lower; index <= upper; ++index) {
     if (index_lhs == mid + 1) {
       aux[index] = a[index_rhs++];
@@ -38,7 +41,8 @@ void merge_sort_step(int lower, int upper, double a[], double aux[]) {
   }
 }
 
-void merge_sort(double a[], int size) {
+
+void merge_sort(size_t size, double a[size]) {
   if (size <= 0) return;
   double* aux = malloc(sizeof(double) * size);
   merge_sort_step(0, size - 1, a, aux);
@@ -48,15 +52,16 @@ void merge_sort(double a[], int size) {
 
 int main(int argc, char* argv[argc + 1]) {
   double* array = malloc(sizeof(double) * (argc - 1));
-  for(int i = 0; i < argc - 1; ++i) {
+  for(size_t i = 0; i < argc - 1; ++i) {
     array[i] = strtod(argv[i + 1], NULL);
     printf("%g\n", array[i]);
   }
   puts("Sorting...");
-  merge_sort(array, argc - 1);
-  for(int i = 0; i < argc - 1; ++i) {
+  merge_sort(argc - 1, array);
+  for(size_t i = 0; i < argc - 1; ++i) {
     printf("%g\n", array[i]);
   }
+  assert(is_sorted(argc - 1, array));
   free(array);
   return EXIT_SUCCESS;
 }
