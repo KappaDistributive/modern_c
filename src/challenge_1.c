@@ -50,6 +50,43 @@ void merge_sort(size_t size, double a[size]) {
 }
 
 
+void quick_sort_step(size_t lower, size_t upper, double a[], double smaller[], double greater[]) {
+  if (upper <= lower) return;
+
+  double pivot = a[lower];
+  size_t smaller_index = 0;
+  size_t greater_index = 0;
+
+  for(size_t index = lower; index <= upper; ++index) {
+    if (a[index] < pivot) {
+      smaller[smaller_index++] = a[index];
+    } else {
+      greater[greater_index++] = a[index];
+    }
+  }
+  
+  size_t index = lower;
+  for(size_t i = 0; i < smaller_index; ++i) {
+    a[index++] = smaller[i];
+  }
+  for(size_t i = 0; i < greater_index; ++i) {
+    a[index++] = greater[i];
+  }
+
+  quick_sort_step(lower, lower + smaller_index, a, smaller, greater);
+  quick_sort_step(lower + smaller_index + 1, upper, a, smaller, greater);
+}
+
+void quick_sort(size_t size, double a[size]) {
+  if (size <= 0) return;
+  double* smaller = malloc(sizeof(double) * size);
+  double* greater = malloc(sizeof(double) * size);
+  quick_sort_step(0, size - 1, a, smaller, greater);
+  free(smaller);
+  free(greater);
+}
+
+
 int main(int argc, char* argv[argc + 1]) {
   double* array = malloc(sizeof(double) * (argc - 1));
   for(size_t i = 0; i < argc - 1; ++i) {
@@ -57,7 +94,9 @@ int main(int argc, char* argv[argc + 1]) {
     printf("%g\n", array[i]);
   }
   puts("Sorting...");
-  merge_sort(argc - 1, array);
+  /* merge_sort(argc - 1, array); */
+  quick_sort(argc - 1, array);
+
   for(size_t i = 0; i < argc - 1; ++i) {
     printf("%g\n", array[i]);
   }
