@@ -6,12 +6,12 @@
 #define TABLE_SIZE 20
 
 void InitPartition(size_t parent[TABLE_SIZE]) {
-  for(size_t i = 0; i < TABLE_SIZE; ++i) {
+  for (size_t i = 0; i < TABLE_SIZE; ++i) {
     parent[i] = SIZE_MAX;
   }
 }
 
-size_t Find(size_t element, size_t parent[static TABLE_SIZE]) {
+size_t Find(size_t element, const size_t parent[static TABLE_SIZE]) {
   /* Return the root of `element` in partition */
   size_t candidate = element;
   while (1) {
@@ -22,23 +22,24 @@ size_t Find(size_t element, size_t parent[static TABLE_SIZE]) {
   }
 }
 
-void FindReplace(size_t element, size_t value, size_t parent[static TABLE_SIZE]) {
-  size_t new_element;
+void FindReplace(
+  size_t element,
+  size_t value,
+  size_t parent[static TABLE_SIZE]) {
   do {
-    new_element = parent[element];
+    size_t new_element = parent[element];
     parent[element] = value;
     element = new_element;
-  } while(element != SIZE_MAX);
+  } while (element != SIZE_MAX);
 }
 
 void FindCompress(size_t element, size_t parent[static TABLE_SIZE]) {
   size_t root = Find(element, parent);
-  size_t new_element;
   while (parent[element] != SIZE_MAX) {
-    new_element = parent[element];
+    size_t new_element = parent[element];
     parent[element] = root;
     element = new_element;
-  };
+  }
 }
 
 void Union(size_t x, size_t y, size_t parent[static TABLE_SIZE]) {
@@ -53,14 +54,13 @@ void PrintPartition(size_t parent[static TABLE_SIZE]) {
     if (parent[i] == SIZE_MAX) {
       printf("{");
       for (size_t j = 0; j < TABLE_SIZE; ++j) {
-        if(Find(j, parent) == i) {
+        if (Find(j, parent) == i) {
           printf("%zu, ", j);
         }
       }
       printf("}, ");
     }
   }
-  
   printf("}\n");
 }
 
