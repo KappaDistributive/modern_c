@@ -82,8 +82,4 @@ int main() {
   PrintPartition(parent);
   Union(0, 4, parent);
   PrintPartition(parent);
-
-
-
-
 }
