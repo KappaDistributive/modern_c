@@ -8,3 +8,4 @@ add_executable(challenge_2 src/challenge_2.c)
 
 add_executable(challenge_4 src/challenge_4.c)
 add_executable(challenge_5 src/challenge_5.c)
+add_executable(challenge_6 src/challenge_6.c)
