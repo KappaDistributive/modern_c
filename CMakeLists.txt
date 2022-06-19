@@ -9,6 +9,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
 set(CMAKE_SHARED_LINKER_FLAGS "-lm")
 
+include(CTest)
+
 add_library(list src/utils/list.c)
 
 
@@ -25,3 +27,9 @@ add_executable(challenge_6 src/challenge_6.c)
 
 add_executable(tmp src/tmp.c)
 target_link_libraries(tmp list)
+
+add_executable(tests tests/main.c)
+target_link_libraries(tests list)
+
+add_test(MainTest tests)
+
