@@ -53,4 +53,6 @@ Mkfile.old
 dkms.conf
 
 # Other
+build
 tags
+.vscode
