@@ -1,0 +1,3 @@
+[submodule "include/count-malloc"]
+	path = include/count-malloc
+	url = https://github.com/zunda/count-malloc
