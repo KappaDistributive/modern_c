@@ -6,9 +6,12 @@ struct SNode {
   struct SNode* next;
 };
 
+
 typedef struct SNode SNode;
 
 SNode* SList_create(void* data, size_t data_size);
+
+void SList_free(SNode* list);
 
 size_t SList_length(SNode const* const list);
 
