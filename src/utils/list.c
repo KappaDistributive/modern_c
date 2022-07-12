@@ -6,21 +6,6 @@
 #endif
 
 
-SNode* SList_create(void* data, size_t data_size) {
-  SNode* list = (SNode*)(malloc(sizeof(SNode)));
-  if (list == NULL) return NULL;
-  if (data != NULL && data_size > 0) {
-    list->data = malloc(data_size);
-    if (list->data == NULL) {
-      free(list);
-      return NULL;
-    }
-    memcpy(list->data, data, data_size);
-  }
-  return list;
-}
-
-
 void SList_free(SNode* list) {
   if (list->next != NULL) {
     SList_free(list->next);
@@ -33,10 +18,30 @@ void SList_free(SNode* list) {
   }
 }
 
+
+SNode* SList_create(void* data, size_t data_size) {
+  SNode* list = (SNode*)(malloc(sizeof(SNode)));
+  if (list == NULL) return NULL;
+  list->next = NULL;
+  if (data == NULL || data_size == 0) {
+    list->data = NULL;
+  } else {
+    list->data = malloc(data_size);
+    if (list->data == NULL) {
+      SList_free(list);
+      return NULL;
+    }
+    memcpy(list->data, data, data_size);
+  }
+  return list;
+}
+
+
 size_t SList_length(SNode const* const list) {
   if(list == NULL) return 0;
   return 1 + SList_length(list->next);
 }
+
 
 SNode* SList_append(SNode* const list, void* data, size_t data_size) {
   if (list == NULL) {

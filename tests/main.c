@@ -19,15 +19,26 @@ static char* test_list_creation() {
 
 static char* test_list_length() {
     mu_assert("SList_length(NULL) == 0", SList_length(NULL) == 0);
+    int x = 5;
+    SNode* list = SList_create(&x, sizeof(int));
+    mu_assert("SList_length(list) == 1", SList_length(list) == 1);
+    x = 2;
+    SList_append(list, &x, sizeof(int));
+    mu_assert("SList_length(list) == 2", SList_length(list) == 2);
+    x = 1;
+    SList_append(list, &x, sizeof(int));
+    mu_assert("SList_length(list) == 2", SList_length(list) == 3);
+
+    SList_free(list);
 
     return 0;
 }
 
-static char * all_tests() {
+static char* all_tests() {
     mu_run_test(test_list_creation);
     mu_run_test(test_list_length);
 
-     return 0;
+    return 0;
  }
 
 int main(int argc, char **argv) {
