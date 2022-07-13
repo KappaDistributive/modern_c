@@ -57,17 +57,13 @@ SNode* SList_append(SNode* const list, void* data, size_t data_size) {
   return new_node;
 }
 
-SNode* SList_get_item(SNode const* const list, size_t position) {
-  SNode* node = (SNode*)malloc(sizeof(SNode));
-  if (node == NULL) return NULL;
-  memcpy(node, list, sizeof(SNode));
+SNode* SList_get_item(SNode* list, size_t position) {
+  SNode* node= list;
   size_t current_position = 0;
-  while (current_position++ < position && node->next != NULL) {
+  while (current_position++ < position) {
+    if (node == NULL || node->next == NULL) return NULL;
     node = node->next;
   }
-  if (current_position == position) {
-    return node;
-  }
-  return NULL;
+  return node;
 }
 

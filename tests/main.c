@@ -34,9 +34,29 @@ static char* test_list_length() {
     return 0;
 }
 
+static char* test_get_item() {
+    int x = 1;
+    SNode* list = SList_create(&x, sizeof(int));
+    for (x = 2; x < 10; ++x)
+        SList_append(list, &x, sizeof(int));
+
+    for (size_t index = 0; index < SList_length(list); ++index)  {
+        SNode* node = SList_get_item(list, index);
+        mu_assert("node != NULL", node != NULL);
+        mu_assert("node->data != NULL", node->data != NULL);
+        // printf("index: %zu, value: %d\n", index, *(int*)node->data);
+        mu_assert("*(int*)node->data has incorrect value.", *(int*)node->data == (int)(index + 1));
+    }
+
+    SList_free(list);
+
+    return 0;
+}
+
 static char* all_tests() {
     mu_run_test(test_list_creation);
     mu_run_test(test_list_length);
+    mu_run_test(test_get_item);
 
     return 0;
  }
