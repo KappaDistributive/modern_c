@@ -48,6 +48,11 @@ static char* test_get_item() {
         mu_assert("*(int*)node->data has incorrect value.", *(int*)node->data == (int)(index + 1));
     }
 
+    for (size_t index = 0; index < SList_length(list); ++index)  {
+        SNode* node = SList_get_item(list, SList_length(list) + index);
+        mu_assert("node == NULL", node == NULL);
+    }
+
     SList_free(list);
 
     return 0;
