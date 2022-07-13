@@ -54,7 +54,26 @@ static char* test_get_item() {
     }
 
     SList_free(list);
+    return 0;
+}
 
+static char* test_get_data() {
+    int x = 1;
+    SNode* list = SList_create(&x, sizeof(int));
+    for (x = 2; x < 10; ++x)
+        SList_append(list, &x, sizeof(int));
+
+    for (size_t index = 0; index < SList_length(list); ++index)  {
+        void* data = SList_get_data(list, index);
+        mu_assert("data != NULL", data != NULL);
+        mu_assert("*(int*)data has incorrect value.", *(int*)data == (int)(index + 1));
+    }
+
+    for (size_t index = 0; index < SList_length(list); ++index)  {
+        void* data = SList_get_data(list, SList_length(list) + index);
+        mu_assert("data == NULL", data == NULL);
+    }
+    SList_free(list);
     return 0;
 }
 
@@ -62,7 +81,7 @@ static char* all_tests() {
     mu_run_test(test_list_creation);
     mu_run_test(test_list_length);
     mu_run_test(test_get_item);
-
+    mu_run_test(test_get_data);
     return 0;
  }
 
