@@ -56,6 +56,13 @@ SNode* SList_append(SNode* const list, void* data, size_t data_size) {
   return new_node;
 }
 
+SNode* SList_prepend(SNode* const list, void* data, size_t data_size) {
+  SNode* node = SList_create(data, data_size);
+  node->next = list;
+  return node;
+}
+
+
 SNode* SList_get_item(SNode* list, size_t position) {
   SNode* node= list;
   size_t current_position = 0;

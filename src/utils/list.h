@@ -17,6 +17,8 @@ size_t SList_length(SNode const* const list);
 
 SNode* SList_append(SNode* const list, void* data, size_t data_size);
 
+SNode* SList_prepend(SNode* const list, void* data, size_t data_size);
+
 SNode* SList_get_item(SNode* list, size_t position);
 
 void* SList_get_data(SNode* list, size_t position);
