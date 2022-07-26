@@ -31,6 +31,9 @@ target_link_libraries(challenge_5 PRIVATE m)
 
 add_executable(challenge_6 src/challenge_6.c)
 
+add_executable(challenge_7 src/challenge_7.c)
+target_link_libraries(challenge_7 list)
+
 add_executable(tests tests/main.c)
 target_link_libraries(tests list)
 target_link_libraries(tests count_malloc)
