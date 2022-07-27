@@ -87,3 +87,20 @@ SNode* SList_pop_left(SNode* list) {
   SList_free(head);
   return list;
 }
+
+
+SNode* SList_pop_right(SNode* list) {
+  if (list == NULL) return NULL;
+  if (list->next == NULL) {
+    SList_free(list);
+    return NULL;
+  }
+  if (list->next->next == NULL) {
+    SNode* tail = list->next;
+    list->next = NULL;
+    SList_free(tail);
+    return list;
+  }
+  SList_pop_right(list->next);
+  return list;
+}
