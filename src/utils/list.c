@@ -78,3 +78,12 @@ void* SList_get_data(SNode* list, size_t position) {
   if (node == NULL) return NULL;
   return node->data;
 }
+
+SNode* SList_pop_left(SNode* list) {
+  if (list == NULL) return NULL;
+  SNode* head = list;
+  list = list->next;
+  head->next = NULL;
+  SList_free(head);
+  return list;
+}

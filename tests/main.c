@@ -93,12 +93,35 @@ static char* test_prepend() {
     return 0;
 }
 
+static char* test_pop_left() {
+    int x = 10;
+    SNode* list = SList_create(&x, sizeof(int));
+    for (x = 9; x > 0; --x)
+        list = SList_prepend(list, &x, sizeof(int));
+
+    const size_t list_length = SList_length(list);
+    for (size_t index = 0; index + 1 < list_length; ++index)  {
+        mu_assert("SList_length(list) == list_length - index", SList_length(list) == list_length - index);
+        list = SList_pop_left(list);
+        mu_assert("list != NULL", list != NULL);
+        mu_assert("*(int*)list->data has incorrect value.", *(int*)list->data == (int)(index + 2));
+        mu_assert("SList_length(list) == list_length - index - 1", SList_length(list) == list_length - index - 1);
+    }
+
+    list = SList_pop_left(list);
+    mu_assert("list == NULL", list == NULL);
+
+    return 0;
+}
+
 static char* all_tests() {
     mu_run_test(test_list_creation);
     mu_run_test(test_list_length);
     mu_run_test(test_get_item);
     mu_run_test(test_get_data);
     mu_run_test(test_prepend);
+    mu_run_test(test_pop_left);
+
     return 0;
  }
 
