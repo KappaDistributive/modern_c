@@ -11,16 +11,18 @@ void SList_free(SNode *list) {
   if (list->next != NULL) {
     SList_free(list->next);
   }
-  if (list->data_destructor != NULL) list->data_destructor(list->data);
-  free(list->data);
-  free(list);
+  if (list != NULL && list->data != NULL) {
+    free(list->data);
+  }
+  if (list != NULL) {
+    free(list);
+  }
 }
 
-SNode *SList_create_destructive(void *data, size_t data_size, void data_destructor (void*)) {
+SNode *SList_create(void *data, size_t data_size) {
   SNode *list = (SNode *)(malloc(sizeof(SNode)));
   if (list == NULL)
     return NULL;
-  list->data_destructor = data_destructor;
   list->next = NULL;
   if (data == NULL || data_size == 0) {
     list->data = NULL;
@@ -34,11 +36,6 @@ SNode *SList_create_destructive(void *data, size_t data_size, void data_destruct
   }
   return list;
 }
-
-SNode *SList_create(void *data, size_t data_size) {
-  return SList_create_destructive(data, data_size, NULL);
-}
-
 
 size_t SList_length(SNode const *const list) {
   if (list == NULL)

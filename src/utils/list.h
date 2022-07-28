@@ -4,14 +4,11 @@
 struct SNode {
   void *data;
   struct SNode *next;
-  void (*data_destructor) (void*);
 };
 
 typedef struct SNode SNode;
 
 SNode *SList_create(void *data, size_t data_size);
-
-SNode *SList_create_destructive(void *data, size_t data_size, void data_destructor (void*));
 
 void SList_free(SNode *list);
 
