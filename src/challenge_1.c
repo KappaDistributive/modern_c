@@ -1,21 +1,20 @@
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-
 
 bool is_sorted(size_t size, const double array[size]) {
   for (size_t i = 1; i < size; ++i) {
-    if (array[i] < array[i-1]) {
+    if (array[i] < array[i - 1]) {
       return false;
     }
   }
   return true;
 }
 
-
 void merge_sort_step(size_t lower, size_t upper, double a[], double aux[]) {
-  if (upper <= lower) return;
+  if (upper <= lower)
+    return;
 
   size_t mid = (upper + lower) / 2;
 
@@ -41,22 +40,18 @@ void merge_sort_step(size_t lower, size_t upper, double a[], double aux[]) {
   }
 }
 
-
 void merge_sort(size_t size, double a[size]) {
-  if (size == 0) return;
-  double* aux = (double*)malloc(sizeof(double) * size);
+  if (size == 0)
+    return;
+  double *aux = (double *)malloc(sizeof(double) * size);
   merge_sort_step(0, size - 1, a, aux);
   free(aux);
 }
 
-
-void quick_sort_step(
-  size_t lower,
-  size_t upper,
-  double a[],
-  double smaller[],
-  double greater[]) {
-  if (upper <= lower) return;
+void quick_sort_step(size_t lower, size_t upper, double a[], double smaller[],
+                     double greater[]) {
+  if (upper <= lower)
+    return;
 
   double pivot = a[lower];
   size_t smaller_index = 0;
@@ -83,17 +78,17 @@ void quick_sort_step(
 }
 
 void quick_sort(size_t size, double a[size]) {
-  if (size == 0) return;
-  double* smaller = (double*) malloc(sizeof(double) * size);
-  double* greater = (double*) malloc(sizeof(double) * size);
+  if (size == 0)
+    return;
+  double *smaller = (double *)malloc(sizeof(double) * size);
+  double *greater = (double *)malloc(sizeof(double) * size);
   quick_sort_step(0, size - 1, a, smaller, greater);
   free(smaller);
   free(greater);
 }
 
-
-int main(int argc, char* argv[argc + 1]) {
-  double* array = (double*)malloc(sizeof(double) * (argc - 1));
+int main(int argc, char *argv[argc + 1]) {
+  double *array = (double *)malloc(sizeof(double) * (argc - 1));
   for (size_t i = 0; i < argc - 1; ++i) {
     array[i] = strtod(argv[i + 1], NULL);
     printf("%g\n", array[i]);

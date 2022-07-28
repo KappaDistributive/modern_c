@@ -22,10 +22,8 @@ size_t Find(size_t element, const size_t parent[static TABLE_SIZE]) {
   }
 }
 
-void FindReplace(
-  size_t element,
-  size_t value,
-  size_t parent[static TABLE_SIZE]) {
+void FindReplace(size_t element, size_t value,
+                 size_t parent[static TABLE_SIZE]) {
   do {
     size_t new_element = parent[element];
     parent[element] = value;
