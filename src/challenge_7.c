@@ -13,7 +13,7 @@ bool has_edge(size_t num_vertices, const bool graph[num_vertices][num_vertices],
 }
 
 SNode *breadth_first_search(size_t num_vertices,
-                            const bool graph[num_vertices][num_vertices],
+                            bool const graph[num_vertices][num_vertices],
                             int source) {
   if (source < 0 || source >= (int)num_vertices)
     return NULL;
@@ -67,7 +67,7 @@ SNode *breadth_first_search(size_t num_vertices,
   return completed_paths;
 }
 
-bool can_reach(size_t num_vertices, const bool a[num_vertices][num_vertices],
+bool can_reach(size_t num_vertices, bool const a[num_vertices][num_vertices],
                int source, int destination) {
   bool can_reach = false;
   if (source < 0 || source >= (int)num_vertices || destination < 0 ||
@@ -94,7 +94,7 @@ bool can_reach(size_t num_vertices, const bool a[num_vertices][num_vertices],
 }
 
 SNode *strong_connected_components(size_t num_vertices,
-                                   const bool a[num_vertices][num_vertices]) {
+                                   bool const a[num_vertices][num_vertices]) {
   bool visited[num_vertices];
   for (size_t index = 0; index < num_vertices; ++index) {
     visited[index] = false;
@@ -135,7 +135,7 @@ int main() {
    *     2 ---> 3 ---> 4 ---> 7
    */
   const size_t num_vertices = 8;
-  const bool a[num_vertices][num_vertices] = {
+  bool const a[num_vertices][num_vertices] = {
       // 0  1  2  3  4  5  6
       {0, 1, 1, 0, 0, 0, 0, 0}, // 0
       {0, 0, 1, 0, 0, 1, 0, 0}, // 1
