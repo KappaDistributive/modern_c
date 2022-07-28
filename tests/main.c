@@ -17,6 +17,30 @@ static char* test_list_creation() {
     return 0;
 }
 
+void free_list(void* list) {
+    if (list != NULL) {
+        SList_free(*(SNode**)list);
+    }
+}
+
+static char* test_list_creation_destructive() {
+    int x = 5;
+    SNode* inner_list = SList_create(&x, sizeof(int));
+    x = 6;
+    SList_append(inner_list, &x, sizeof(int));
+    SNode* list = SList_create_destructive(&inner_list, sizeof(SNode*), free_list);
+    // mu_assert("list != NULL", list!= NULL);
+    // mu_assert("*(SNode**)list->data != NULL", *(SNode**)list->data != NULL);
+    // mu_assert("*(int*)(*(SNode**)list->data)->data == 5", *(int*)(*(SNode**)list->data)->data == 5);
+    // mu_assert("list->next == NULL", list->next == NULL);
+
+    // SList_free(inner_list);
+    SList_free(list);
+
+    return 0;
+}
+
+
 static char* test_list_length() {
     mu_assert("SList_length(NULL) == 0", SList_length(NULL) == 0);
     int x = 5;
@@ -88,7 +112,6 @@ static char* test_prepend() {
         mu_assert("data != NULL", data != NULL);
         mu_assert("*(int*)data has incorrect value.", *(int*)data == (int)(index + 1));
     }
-    
     SList_free(list);
     return 0;
 }
@@ -137,6 +160,8 @@ static char* test_pop_right() {
 
 
 static char* all_tests() {
+    mu_run_test(test_list_creation_destructive);
+    return 0;
     mu_run_test(test_list_creation);
     mu_run_test(test_list_length);
     mu_run_test(test_get_item);
