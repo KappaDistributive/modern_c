@@ -8,14 +8,13 @@
 void SList_free(SNode *list) {
   if (list == NULL)
     return;
-  if (list->next != NULL) {
-    SList_free(list->next);
-  }
-  if (list != NULL && list->data != NULL) {
+  SNode *next = list->next;
+  if (list->data != NULL) {
     free(list->data);
   }
-  if (list != NULL) {
-    free(list);
+  free(list);
+  if (next != NULL) {
+    SList_free(next);
   }
 }
 
